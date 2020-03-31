@@ -128,10 +128,10 @@ It can be clearly observed that model trained on Arduino UNO took 1090 epochs to
 
 _Keywords: Arduino NANO, Library {Arduino_TensorFlowLite}_
 
-The example is to be developed in continuation of the previous one, i.e., based on the concept of Function Approximation but implemented as a regression problem using TensorFlow. We train a model on a data generated after creating a random function like `0.2+0.4(p<sup>2</sup>) + 0.3(p Sin(15p) + 0.05 Cos(50p)`.
-![](...)
+The example is to be developed in continuation of the previous one, i.e., based on the concept of Function Approximation but implemented as a regression problem using TensorFlow. We train a model on a data generated after creating a random function like _f(p) = 0.2+0.4(p<sup>2</sup>) + 0.3(p Sin(15p) + 0.05 Cos(50p) .
+![wiggly func](https://github.com/PrashantDandriyal/arduino_GSoC2020/blob/master/wiggly.png)
 
-The model is trained on the data generated using this function i.e., sets of _(x, f(x))_. A 3 layer keras model is capable of approximating this function. The results can seen in the below plot, with the BLUE plot as the regressor line predicted by the model. The model is converted and asked to predict on similar real-time data generated within the board. The results are plotted using the terminal. The training part has been demonstrated in the Google Collab [notebook](Wiggly_function_approximation)... in the proposal repository. The workflow is as:
+The model is trained on the data generated using this function i.e., sets of _(x, f(x))_. A 3 layer keras model is capable of approximating this function. The results can seen in the below plot, with the BLUE plot as the regressor line predicted by the model. The model is converted and asked to predict on similar real-time data generated within the board. The results are plotted using the terminal. The training part has been demonstrated in the Google Collab [notebook](https://github.com/PrashantDandriyal/arduino_GSoC2020/blob/master/Wiggly_function_approximation.ipynb) in the proposal repository. The workflow is as:
 
 `
 Create a function in using Python and generate training data -> Create a Keras model -> Train -> Obtain TF Lite model -> Obtain byte array model -> Use model to make prediction on similar data on device -> Plot results on terminal` 
