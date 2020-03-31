@@ -1,7 +1,11 @@
-# Writing Examples for Official Libraries : Project Proposal for GSoC, 2020
+# GSoC 2020 | Writing Examples for Official Libraries
+
+## A Project Proposal submitted to Arduino
 
 **Name:** Prashant Dandriyal
+
 **GitHub:** [PrashantDandriyal](https://github.com/PrashantDandriyal)
+
 **Email:** prashantdandriyal7@gmail.com
 
 ## Abstract
@@ -124,7 +128,7 @@ It can be clearly observed that model trained on Arduino UNO took 1090 epochs to
 
 _Keywords: Arduino NANO, Library {Arduino_TensorFlowLite}_
 
-The example is to be developed in continuation of the previous one, i.e., based on the concept of Function Approximation but implemented as a regression problem using TensorFlow. We train a model on a data generated after creating a random functio like `0.2+0.4*pow(p, 2)+0.3*p*math.sin(15*p)+0.05*math.cos(50*p)`.
+The example is to be developed in continuation of the previous one, i.e., based on the concept of Function Approximation but implemented as a regression problem using TensorFlow. We train a model on a data generated after creating a random function like `0.2+0.4(p<sup>2</sup>) + 0.3(p Sin(15p) + 0.05 Cos(50p)`.
 ![](...)
 
 The model is trained on the data generated using this function i.e., sets of _(x, f(x))_. A 3 layer keras model is capable of approximating this function. The results can seen in the below plot, with the BLUE plot as the regressor line predicted by the model. The model is converted and asked to predict on similar real-time data generated within the board. The results are plotted using the terminal. The training part has been demonstrated in the Google Collab [notebook](Wiggly_function_approximation)... in the proposal repository. The workflow is as:
@@ -156,6 +160,7 @@ _Keywords: Arduino NANO, Microphone(MP34DT05), TensorFlow, Library{ PDM, Arduino
 As per the [GoogleAI blog](https://ai.googleblog.com/2018/11/accurate-online-speaker-diarization.html), diarization refers to the process of classifying partitions of audio stream with multiple sources/speakers, into different segments associated with each individual source. I propose to develop a related application; instead of breaking down the audio clip, we will be analysing it and displaying the class to which the source(s) are assigned. Just like other examples, we leverage CNN-based Supervised Learning to train a TensorFlow (Lite) model trained on spectrograms of audios generated from different sources like: a human talking, drilling machine at work, nail getting hammered, etc. The model+NANO assembly will be responsible for distinguishing between these sounds when subjected to such an environment, generally an industrial setup. It can be used to create a smart sensor that warns when there is too much of sound generation or rather pollution. It can also determine the number of equipments in work and can warn if there a set of jobs (like humans chatting around when a heavy machine is at work) may be risky for the workers. 
 
 The unique part in this example is the part where the feature is generated from the audio, using _Fast Fourier Transform_ (FFT) and converting it into an array. This part is done by the `GenerateMicroFeatures()` pre-defined in `micro_features/micro_features_generator.h`. The part that needs deciding, remains the sample size and the sliding window size. Heuristically, a 30ms window is recommended by the authors of the TinyML book. The values obtained in this window is stored as an array using the FFT. The window is shifted by 20ms resulting in a 10ms overlap. Further optimization to reduce data is achieved by averaging these values to reduce the effect of overlapping values. Workflow:
+
 `Generate audio data using MP34DT05 -> Obtain spectrogram using FFT -> Process it (Perform Down Sampling/Upsampling and normalization/standardisation) -> Train TF model -> Obtain TF Lite model -> Obtain byte-array model -> Perform inference`
 
 
@@ -224,26 +229,26 @@ ____
 ### **Phase 3 (July 28, 2020 - August 23, 2020)**
 
 * Deliverable 5 : **Example 5 (Sound-based diarization/Classification)**
- * Obtain training data using on-board microphone.
- * Process it (Downsample and average values) using FFT to get a numeric array.
- * Train and convert model to header format.
- * Import model into .ino file and create data intake pipeline for the audio data. Process it to suit the model.
- * Test the system in real-time
- * Debug errors and document.
+  * Obtain training data using on-board microphone.
+  * Process it (Downsample and average values) using FFT to get a numeric array.
+  * Train and convert model to header format.
+  * Import model into .ino file and create data intake pipeline for the audio data. Process it to suit the model.
+  * Test the system in real-time
+  * Debug errors and document.
 
 * Deliverable 6: Project Publishing
- * Create project related to the examples and publish on the Arduino project Hub.
- * Test Mergeability of code with the actual (Arduino_TensorFlowLite) library. 
- * Provide tutorial to use the library.
- * Specify the future scope. 
+  * Create project related to the examples and publish on the Arduino project Hub.
+  * Test Mergeability of code with the actual (Arduino_TensorFlowLite) library. 
+  * Provide tutorial to use the library.
+  * Specify the future scope. 
 
 ### **Final Week (August 24, 2020 - August 31, 2020)**
 
 * Deliverable 7: **Final Project Report** 
- * Discuss progress with mentors and seek suggestions on final report.
- * Get feedback on project. 
- * Make suggested edits.
- * Prepare final report and get it reviewed by mentors.
+  * Discuss progress with mentors and seek suggestions on final report.
+  * Get feedback on project. 
+  * Make suggested edits.
+  * Prepare final report and get it reviewed by mentors.
 
 ___
 
@@ -259,9 +264,9 @@ I could not find a official repository for the library but have studied it well.
 * Speech-VINO (Intel's OpenVINO toolkit): The page is meant for contributions to Intel's OpenVINO-toolkit-based projects. These projects incoporate sound applications. I have shared my project (in process of the "Introduction to Intel's OpenVINO toolkit" course, in which I am a scholar)
 
 * Arduino: 
- * My first contribution to Arduino has been the modificatios to its "Ciao" [library](https://github.com/arduino-libraries/Ciao). I have updated the `readme.md` in official format. The Pull Request has been reviewed but merging is not yet done as the responsible maintainers have not gone through it. 
- * Next, I created an issues on Arduino_JSON [#6](https://github.com/arduino-libraries/Arduino_JSON/issues/6)
- * Participated in discussions on issues [#566](https://github.com/arduino/arduino-cli/issues/566) and [#549](https://github.com/arduino/arduino-cli/issues/549) in Arduino-cli.
+  * My first contribution to Arduino has been the modificatios to its "Ciao" [library](https://github.com/arduino-libraries/Ciao). I have updated the `readme.md` in official format. The Pull Request has been reviewed but merging is not yet done as the responsible maintainers have not gone through it. 
+  * Next, I created an issues on Arduino_JSON [#6](https://github.com/arduino-libraries/Arduino_JSON/issues/6)
+  * Participated in discussions on issues [#566](https://github.com/arduino/arduino-cli/issues/566) and [#549](https://github.com/arduino/arduino-cli/issues/549) in Arduino-cli.
 
 * Miscellaneous: Other Open-Source contributions include the [OpenVINO](https://github.com/alihussainia/OpenDevLibrary) project. I have been an active contributor and now, a maintainer to the project. The project aims at creating a hassle-free portable version of the Intel OpenVINO (Open Visual inference and Neural Optimization) toolkit. Till now, the project has had successful runs and no issues.
 
