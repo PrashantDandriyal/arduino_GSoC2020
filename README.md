@@ -1,3 +1,9 @@
+# Writing Examples for Official Libraries : Project Proposal for GSoC, 2020
+
+**Name:** Prashant Dandriyal
+**GitHub:** [PrashantDandriyal](https://github.com/PrashantDandriyal)
+**Email:** prashantdandriyal7@gmail.com
+
 ## Abstract
 
 >Short description of your project
@@ -100,6 +106,7 @@ To avoid hassle of dependency mismanagement, I have kept the new examples with t
 
 ____
 
+
 ### Examples
 
 **1) On-Device Training (for Function Approximation)**: Demonstration of training on microcontrollers
@@ -115,12 +122,13 @@ It can be clearly observed that model trained on Arduino UNO took 1090 epochs to
 
 **2) Function Plotter:** Simple regression application based on _function approximation_
 
-_Keywords: _Arduino NANO, Library {Arduino_TensorFlowLite}_
+_Keywords: Arduino NANO, Library {Arduino_TensorFlowLite}_
 
 The example is to be developed in continuation of the previous one, i.e., based on the concept of Function Approximation but implemented as a regression problem using TensorFlow. We train a model on a data generated after creating a random functio like `0.2+0.4*pow(p, 2)+0.3*p*math.sin(15*p)+0.05*math.cos(50*p)`.
 ![](...)
 
 The model is trained on the data generated using this function i.e., sets of _(x, f(x))_. A 3 layer keras model is capable of approximating this function. The results can seen in the below plot, with the BLUE plot as the regressor line predicted by the model. The model is converted and asked to predict on similar real-time data generated within the board. The results are plotted using the terminal. The training part has been demonstrated in the Google Collab [notebook](Wiggly_function_approximation)... in the proposal repository. The workflow is as:
+
 `
 Create a function in using Python and generate training data -> Create a Keras model -> Train -> Obtain TF Lite model -> Obtain byte array model -> Use model to make prediction on similar data on device -> Plot results on terminal` 
 
@@ -164,23 +172,8 @@ ____
 
 >Here should come a list of your milestones
 
-- first example(Activity Tracker): 
--- Obtain training data using the on-board IMU
--- Train model using TensorFlow and convert it into TF Lite model
--- Interface the model with Arduino code and test assembly on real-time data
-
-- Second example(Activity Tracker): 
--- Obtain training data using the on-board IMU
--- Train model using TensorFlow and convert it into TF Lite model
--- Interface the model with Arduino code and test assembly on real-time data
-
-- 
--- Sort related issues
--- 
-___________________
-
 ### **Community Bonding Period (May 4, 2020 - June 1, 2020)**
-* Discussing approach and weekly targets for Phase 1 with mentors.
+* Discuss approach and weekly targets for Phase 1 with mentors.
 * Setup working environment for development.
 * Study about the `Arduino_TensorFlowLite` and its backend on TensorFlow repository.
 * Document the dependency network for better understanding.
@@ -190,47 +183,47 @@ ___________________
 
 ### **Phase 1 (June 1, 2020 - July 3, 2020)**
 
-* Deliverable 1 : **Example 1: On-Device Training**
- * Generate fake training data using the Summation function (SUM =f(R,B,G) ). (locally)
- * Train model on local system (locally)
- * Port training process into the `void setup()` and `void loop()` interface of Arduino.
- * Collect data on-device using the color sensor (APDS9960)
- * Perform training and display the performance on console.
- * Test model on real-time data
- * Compare performance and document it
+* Deliverable 1 : **Example 1 (On-Device Training)**
+  * Generate fake training data using the Summation function (`SUM =f(R,B,G)` ). (locally)
+  * Train model on local system (locally)
+  * Port training process into the `void setup()` and `void loop()` interface of Arduino.
+  * Collect data on-device using the color sensor (APDS9960)
+  * Perform training and display the performance on console.
+  * Test model on real-time data
+  * Compare performance and document it
 
-* Deliverable 2 Example 2: Function Plotter
- * Obtain fake training data using a random (wiggly) function using Python.
- * Create and Train a simple neural network using TensorFlow/Keras API.
- * Convert TF model -> TF Lite model -> `model.h`
- * Create the `.ino` file after importing the model file.
- * Generate real-time data (_x_) and use model to predict (_f(x)_).
- * Plot the predicted vs actual result.
- * Test the system, document issues.
+* Deliverable 2 : **Example 2 (Function Plotter)**
+  * Obtain fake training data using a random (wiggly) function using Python.
+  * Create and Train a simple neural network using TensorFlow/Keras API.
+  * Convert TF model -> TF Lite model -> `model.h`
+  * Create the `.ino` file after importing the model file.
+  * Generate real-time data (_x_) and use model to predict (_f(x)_).
+  * Plot the predicted vs actual result.
+  * Test the system, document issues.
 
 ### **Phase 2 (July 4, 2020 - July 27, 2020)**
 
-* Deliverable 3 Example 3 : Anomaly Detection
- * Design and make the motor-plank assembly.
- * Use the on-board sensor mounted on the assembly to obtain training data. Generate different conditions using the assembly to procure adequate data for both the classes.
- * Process data (sample it and normalize/standardise).
- * Train model on data and obtain `model.h` file as done previously.
- * Create .ino file. Design data pipeline to be used in it. 
- * Add warning feature for `unsafe` class (when detected)
- * Test the system, document issues.
+* Deliverable 3 : **Example 3 (Anomaly Detection)**
+  * Design and make the motor-plank assembly.
+  * Use the on-board sensor mounted on the assembly to obtain training data. Generate different conditions using the assembly to procure adequate data for both the classes.
+  * Process data (sample it and normalize/standardise).
+  * Train model on data and obtain `model.h` file as done previously.
+  * Create .ino file. Design data pipeline to be used in it. 
+  * Add warning feature for `unsafe` class (when detected)
+  * Test the system, document issues.
 
-* Deliverable 4 Example 4: Activity Tracker
- * Obtain training data using the IMU for 3-4 classes indicating motion/no-motion conditions.
- * Process data and train data using TensorFlow and Python.
- * Convert model to header format (as done before)
- * Deploy model to .ino file. Add data handling part to create similar data (as used for training). 
- * Test the system in real-time.
- * Add BLE feature by connecting to and sending data to another BLE-powered device (smartphone).
- * Test and debug. Document the observations.
+* Deliverable 4 : **Example 4 (Activity Tracker)**
+  * Obtain training data using the IMU for 3-4 classes indicating motion/no-motion conditions.
+  * Process data and train data using TensorFlow and Python.
+  * Convert model to header format (as done before)
+  * Deploy model to .ino file. Add data handling part to create similar data (as used for training). 
+  * Test the system in real-time.
+  * Add BLE feature by connecting to and sending data to another BLE-powered device (smartphone).
+  * Test and debug. Document the observations.
 
 ### **Phase 3 (July 28, 2020 - August 23, 2020)**
 
-* Deliverable 5 Example 5: Sound-based diarization/Classification
+* Deliverable 5 : **Example 5 (Sound-based diarization/Classification)**
  * Obtain training data using on-board microphone.
  * Process it (Downsample and average values) using FFT to get a numeric array.
  * Train and convert model to header format.
@@ -246,7 +239,7 @@ ___________________
 
 ### **Final Week (August 24, 2020 - August 31, 2020)**
 
-* Deliverable 7: Final Project Report 
+* Deliverable 7: **Final Project Report** 
  * Discuss progress with mentors and seek suggestions on final report.
  * Get feedback on project. 
  * Make suggested edits.
@@ -265,7 +258,10 @@ I could not find a official repository for the library but have studied it well.
 
 * Speech-VINO (Intel's OpenVINO toolkit): The page is meant for contributions to Intel's OpenVINO-toolkit-based projects. These projects incoporate sound applications. I have shared my project (in process of the "Introduction to Intel's OpenVINO toolkit" course, in which I am a scholar)
 
-* Arduino: My first contribution to Arduino has been the modificatios to its "Ciao" [library](https://github.com/arduino-libraries/Ciao). I have updated the `readme.md` in official format. The Pull Request has been reviewed but merging is not yet done as the responsible maintainers have not gone through it. .... #
+* Arduino: 
+ * My first contribution to Arduino has been the modificatios to its "Ciao" [library](https://github.com/arduino-libraries/Ciao). I have updated the `readme.md` in official format. The Pull Request has been reviewed but merging is not yet done as the responsible maintainers have not gone through it. 
+ * Next, I created an issues on Arduino_JSON [#6](https://github.com/arduino-libraries/Arduino_JSON/issues/6)
+ * Participated in discussions on issues [#566](https://github.com/arduino/arduino-cli/issues/566) and [#549](https://github.com/arduino/arduino-cli/issues/549) in Arduino-cli.
 
 * Miscellaneous: Other Open-Source contributions include the [OpenVINO](https://github.com/alihussainia/OpenDevLibrary) project. I have been an active contributor and now, a maintainer to the project. The project aims at creating a hassle-free portable version of the Intel OpenVINO (Open Visual inference and Neural Optimization) toolkit. Till now, the project has had successful runs and no issues.
 
