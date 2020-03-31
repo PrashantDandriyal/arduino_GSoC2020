@@ -82,7 +82,7 @@ The model is converted to a header file which is then imported into the _main_ m
 
    The above three routines/modules are placed in the `setup()` sub-routine. The following run indefinitely in the `loop()` sub-routine, in compliance with Arduino's workflow.
   
-    Once the data collected is ready for feeding to the model, i.e., after the required number of samples have been successfully collected and if needed, pre-processed (like normalisation, upsampling/downsampling, etc), the input data is forward propagated and actual inference is made using the follwing modules:
+   Once the data collected is ready for feeding to the model, i.e., after the required number of samples have been successfully collected and if needed, pre-processed (like normalisation, upsampling/downsampling, etc), the input data is forward propagated and actual inference is made using the follwing modules:
 
   * **Invoke:** Although a member of the Interpreter object, it performs inference on the input data.
 
@@ -127,9 +127,9 @@ To avoid hassle of dependency mismanagement, I have kept the new examples with t
 
    This application is simplest yet quite novel and doesn't require any extra sensor module(s). Neural Networks have been proved to be universal function approximators by [Cybenko](https://en.wikipedia.org/wiki/Universal_approximation_theorem) and Hornik et al. but with _varying degree of approximation_. I have implemented some random wiggly continuous functions on the Arduino UNO in bare C and plotted using C++ tools. The interesting part is that this was done using a shallow neural network using a single hidden layer with `< 10` hidden neurons. The related work can be found in my [repository](https://github.com/PrashantDandriyal/Neural-Networks-In-Cpp/tree/master/Wiggly_Functions). The training was done on the UNO board. The `.ino` file can be found in the same repository or [here](https://github.com/PrashantDandriyal/Neural-Networks-In-Cpp/blob/master/arduino_NNv2.0.ino). The results were discussed in a paper that I have drafted but is yet to be submitted. The result can be understood with the following plot.
 
-    ![Results of Summation function](https://github.com/PrashantDandriyal/arduino_GSoC2020/blob/master/DeviceTrain_results.png)
+   ![Results of Summation function](https://github.com/PrashantDandriyal/arduino_GSoC2020/blob/master/DeviceTrain_results.png)
 
-    It can be clearly observed that model trained on Arduino UNO took 1090 epochs to compete with the accuracy of the one trained on a local system. I plan to port this function approximator to the NANO boards. I will be training two networks: a shallow simple Neural Network and a deep neural network. The former will be slighly slow and not as accurate as the deep one. But this is lesson we learn. The second part is implemented using TensorFlow, using the workflow similar to the other examples. The example explains such basic differences in a trivial manner. The on-device training (which takes about 100-200 epochs than the conventional 4GB RAM-based computer systems) is another star to this example. It demonstrates how and why the precision in such microcontrollers drops and how it affects the performance. 
+   It can be clearly observed that model trained on Arduino UNO took 1090 epochs to compete with the accuracy of the one trained on a local system. I plan to port this function approximator to the NANO boards. I will be training two networks: a shallow simple Neural Network and a deep neural network. The former will be slighly slow and not as accurate as the deep one. But this is lesson we learn. The second part is implemented using TensorFlow, using the workflow similar to the other examples. The example explains such basic differences in a trivial manner. The on-device training (which takes about 100-200 epochs than the conventional 4GB RAM-based computer systems) is another star to this example. It demonstrates how and why the precision in such microcontrollers drops and how it affects the performance. 
 
 **5) Digital Mouse using NANO:** To be done after advice from mentors and deadline permitted
 
