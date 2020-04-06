@@ -1,5 +1,6 @@
 /*
  activity_tracker: Demo project for GSoC 2020 (Arduino)
+ - The file has not been tested on an actual Arduino Platform but suits the purpose of demonstrating the methodology. There may be logical issues which can be corrected at the time of implementation on actual hardware, and hence, can be neglected right now.
 
  Author: Prashant Dandriyal
  Date: 30 March, 2020
@@ -18,9 +19,10 @@
 #include "tensorflow/lite/schema/schema_generated.h"
 #include "tensorflow/lite/version.h"
 
+#include "model.h"	// Model exported from iPython notebook
 
 const float accelerationThreshold = 2.5; // threshold of significant in G's
-const int numSamples = 119;
+const int numSamples = 50; // The format of data fed to the model is: (numFeature, 50 samples), where numFeatures in our case is 6: ax, ay, az, gx, gy, gz
 
 // Globals, used for compatibility with Arduino-style sketches.
 namespace {
@@ -32,8 +34,10 @@ const tflite::Model* tf_model = nullptr;
 tflite::MicroInterpreter* interpreter = nullptr;
 // Tensor handler
 TfLiteTensor* model_input = nullptr;
-int input_length = numSamples;	//To keep a count of samples taken
+TfLiteTensor* model_output = nullptr;
 
+int input_length = numSamples;	//To keep a count of samples taken
+int num_classes = 4; 		// The model has been trained on 4 classes: [walk, sit, jog, stand (but in order)
 
 // Create an area of memory to use for input, output, and intermediate arrays.
 // The size of this will depend on the model we're using
@@ -88,7 +92,8 @@ void setup()
 
   // Obtain pointer to the model's input tensor
   model_input = interpreter->input(0);
-  input_length = model_input->bytes / sizeof(float);
+  model_output = interpreter->output(0);
+  ///input_length = model_input->bytes / sizeof(float);
 
   TfLiteStatus setup_status = SetupAccelerometer(error_reporter);
   if (setup_status != kTfLiteOk) 
@@ -100,27 +105,47 @@ void setup()
 void loop() 
 {
   float ax, ay, az, gx, gy, gz;
-  // Attempt to read new data from the accelerometer
-  while(input_length != numSamples)
-  {
-      d
-  }
-  // If there was no new data, wait until next time
 
-  if (!got_data) return;
-  // Run inference, and report any error
+  // Reset Count 
+  samplesRead = 0;
+
+  // Attempt to read new data from the accelerometer
+  while(input_length < numSamples)
+  {
+      if (IMU.accelerationAvailable() && IMU.gyroscopeAvailable()) {
+      // read the acceleration and gyroscope data
+      IMU.readAcceleration(ax, ay, az);
+      IMU.readGyroscope(gx, gy, gz);
+	
+       // Prepare data by normalizing/standardising
+	// Use the same method as done while training
+	model_input->data.f[samplesRead *6 +0] = (ax+7.5)/15;
+	model_input->data.f[samplesRead *6 +1] = (ay+7.5)/15;
+	model_input->data.f[samplesRead *6 +2] = (az+7.5)/15;
+	model_input->data.f[samplesRead *6 +3] = (gx+4)/8;
+	model_input->data.f[samplesRead *6 +4] = (gy+4)/8;
+	model_input->data.f[samplesRead *6 +5] = (gz+4)/8;
+	
+	// Update count
+	samplesRead++;
+  }
+
+  // Data Collected. Perform Inference
   TfLiteStatus invoke_status = interpreter->Invoke();
 
-  if (invoke_status != kTfLiteOk) 
+  if(invoke_status != kTfLiteOk)
   {
-    error_reporter->Report("Invoke failed on index: %d\n", begin_index);
-    return;
+	Serial.println("Inference Failed");
+	error_reporter->Report("Invoke failed on index: %d\n", begin_index);
+	return;
   }
-  // Analyze the results to obtain a prediction
-  int gesture_index = PredictGesture(interpreter->output(0)->data.f);
-  // Clear the buffer next time we read data
-  should_clear_buffer = gesture_index < 3;
-  // Produce an output
-  HandleOutput(error_reporter, gesture_index);
+  else	// Print results
+  {
+	for(int i=0; i<num_classes; ++i)
+	{
+	    // Print probablities of all classes
+	    Serial.println(model_output->data.f[i]); 
+	} 
+  }
 }
 
