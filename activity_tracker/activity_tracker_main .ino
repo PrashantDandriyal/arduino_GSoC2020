@@ -1,6 +1,7 @@
 /*
  activity_tracker: Demo project for GSoC 2020 (Arduino)
- - The file has not been tested on an actual Arduino Platform but suits the purpose of demonstrating the methodology. There may be logical issues which can be corrected at the time of implementation on actual hardware, and hence, can be neglected right now.
+ - The file has not been tested on an actual Arduino Platform but suits the purpose of demonstrating the methodology. 
+ - There may be logical issues which can be corrected at the time of implementation on actual hardware, and hence, can be neglected right now.
 
  Author: Prashant Dandriyal
  Date: 30 March, 2020
